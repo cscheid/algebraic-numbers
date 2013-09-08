@@ -1,0 +1,170 @@
+
+#ifndef VECTOR2_H
+#define VECTOR2_H
+#include <iostream>
+class vector2
+{
+public:
+    float x;
+    float y;
+    vector2();
+    vector2(const float& a,const float& b);
+    vector2 operator+	(const vector2& b) const;	//vector addition
+    vector2& operator+=	(const vector2& b);
+    vector2 operator-	(const vector2& b) const;	//vector subtraction
+    vector2& operator-=	(const vector2& b);
+    vector2 operator*	(const float& b) const;	//vector scalar multiplication
+    vector2& operator*=	(const float& b);
+    vector2 operator/	(const float& b) const;	//vector scalar division
+    vector2& operator/=	(const float& b);
+    float operator*		(const vector2& b) const;	//dot product
+    void normalize();
+    void normalize(const float& dist);
+    vector2 normalized() const;
+    vector2 normalized(const float& dist) const;
+    float length() const;
+};
+vector2 operator* (const float& b, const vector2& c);
+std::ostream& operator<<(std::ostream& out, const vector2& c);
+
+vector2 lerp(double t,const vector2& vec1,const vector2& vec2);
+vector2 qerp(double t,const vector2& vec0,const vector2& vec1,const vector2& vec2,const vector2& vec3);
+#endif // VECTOR2_H
+			</pre></div></div>
+<p>vector2.cpp</p>
+<script language="javascript">toggle(getObject('exp1300194317_link'), 'exp1300194317');</script>
+
+							<!-- flooble Expandable Content box start -->
+<div style="border: 1px solid #454545; padding: 0px; background: #EEEEEE; "><table border="0" cellspacing="0" cellpadding="2" width="100%" style="background: #000000; color: #FFFFFF; "><tr><td>Code</td><td align="right">
+[<a title="show/hide" id="exp1300194311_link" href="javascript: void(0);" onclick="toggle(this, 'exp1300194311');"  style="text-decoration: none; color: #FFFFFF; ">-</a>]</td></tr></table>
+<div id="exp1300194311" style="padding: 3px;">		
+<pre class="code">
+#include "vector2.h"
+#include <math.h>
+#include <iostream>
+vector2::vector2()
+{
+    x = y = 0.0f;
+}
+vector2::vector2(const float& a,const float& b)
+{
+    x=a;
+    y=b;
+}
+vector2 vector2::operator+ (const vector2& b) const
+{
+    vector2 temp;
+    temp.x=x+b.x;
+    temp.y=y+b.y;
+    return temp;
+}
+vector2& vector2::operator+= (const vector2& b)
+{
+    if(this!=&b)
+    {
+        x=x+b.x;
+        y=y+b.y;
+    }
+    return *this;
+}
+vector2 vector2::operator-(const vector2& b) const
+{
+    vector2 temp;
+    temp.x=x-b.x;
+    temp.y=y-b.y;
+    return temp;
+}
+vector2& vector2::operator-=(const vector2& b)
+{
+    if(this!=&b)
+    {
+        x=x-b.x;
+        y=y-b.y;
+    }
+    return *this;
+}
+float vector2::operator* (const vector2& b) const
+{
+    return (x*b.x+y*b.y);
+}
+vector2 vector2::operator* (const float& b) const
+{
+    vector2 temp;
+    temp.x=x*b;
+    temp.y=y*b;
+    return temp;
+}
+vector2& vector2::operator*= (const float& b)
+{
+    x=x*b;
+    y=y*b;
+    return *this;
+}
+vector2 vector2::operator/ (const float& b) const
+{
+    vector2 temp=vector2(0.0f,0.0f);
+    if(b>0)
+    {
+        temp.x=x/b;
+        temp.y=y/b;
+    }
+    return temp;
+}
+vector2& vector2::operator/= (const float& b)
+{
+    if(b>0)
+    {
+        x=x/b;
+        y=y/b;
+    }
+    return *this;
+}
+void vector2::normalize()
+{
+    float dist = sqrt(x*x+y*y);
+    x/=dist;
+    y/=dist;
+}
+void vector2::normalize(const float& dist)
+{
+    x/=dist;
+    y/=dist;
+}
+vector2 vector2::normalized() const
+{
+    float dist = sqrt(x*x+y*y);
+    return vector2(x/dist,y/dist);
+}
+vector2 vector2::normalized(const float& dist) const
+{
+    return vector2(x/dist,y/dist);
+}
+float vector2::length() const
+{
+    return sqrt(x*x+y*y);
+}
+
+std::ostream& operator<<(std::ostream& out, const vector2& c)
+{
+    out << '(' << c.x << ',' << c.y << ')' ;
+    return out;
+}
+vector2 operator* (const float& b, const vector2& c)
+{
+    vector2 temp;
+    temp.x=c.x*b;
+    temp.y=c.y*b;
+    return temp;
+}
+vector2 lerp(double t,const vector2& vec1,const vector2& vec2)
+{
+    return (vec2-vec1)*t+vec1;
+}
+vector2 qerp(double t,const vector2& vec0,const vector2& vec1,const vector2& vec2,const vector2& vec3)
+{
+    double t2=t*t;
+    vector2 a0=vec3-vec2-vec0+vec1;
+    vector2 a1=vec0-vec1-a0;
+    vector2 a2=vec2-vec0;
+    return a0*t*t2+a1*t2+a2*t+vec1;
+}

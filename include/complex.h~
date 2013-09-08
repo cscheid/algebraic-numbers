@@ -1,0 +1,44 @@
+
+
+#ifndef COMPLEX_H
+#define COMPLEX_H
+#include <iostream>
+class Complex
+{
+public:
+    float x;
+    float y;
+    Complex();
+    Complex(const float& a,const float& b);
+    
+    //Complex <-> Complex operators
+    Complex operator+	(const Complex& b) const;
+    Complex& operator+=	(const Complex& b);
+    Complex operator-	(const Complex& b) const;	
+    Complex& operator-=	(const Complex& b);
+    Complex operator*	(const Complex& b) const;
+    Complex& operator*=	(const Complex& b); 
+    Complex operator/	(const Complex& b) const;
+    Complex& operator/=	(const Complex& b);
+    
+    //Complex <-> Real operators
+    Complex operator+	(const float& b) const;
+    Complex& operator+=	(const float& b);
+    Complex operator- 	(const float& b) const;
+    Complex& operator-=	(const float& b);
+    Complex operator*	(const float& b) const;	
+    Complex& operator*=	(const float& b);
+    Complex operator/	(const float& b) const;
+    Complex& operator/=	(const float& b);
+    float length() const;
+    float length2() const; //returns the squared magnitude of the complex number
+    float arg() const; //returns the complex argument of the vector (direct call to atan2)
+};
+Complex operator* (const float& b, const Complex& c);
+Complex operator/ (const float& b, const Complex& c);
+Complex operator+ (const float& b, const Complex& c);
+Complex operator- (const float& b, const Complex& c);
+std::ostream& operator<<(std::ostream& out, const Complex& c);
+const Complex I=Complex(0,1);
+#endif // COMPLEX_H
+
