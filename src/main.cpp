@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 			float k2=.55;
 			for (int n=0;n<p.size();n++)
 			{
-				switch (p.at(n).o)
+                            /*				switch (p.at(n).o)
 				{
 					case 1: glColor3f(1,0,0); break;
 					case 2: glColor3f(0,1,0); break;
@@ -103,7 +103,16 @@ int main(int argc, char** argv)
 					case 7: glColor3f(1,0,1); break;
 					case 8: glColor3f(0.6,0.6,0.6); break;
 					default: glColor3f(1,1,1); break;
-				}
+                                        }*/
+                            float u = p.at(n).o;
+                            if (u > 8) u = 8;
+                            u /= 8;
+                            float c1[4] = { 55, 126, 184, 0.1 };
+                            float c2[4] = { 255, 127, 0, 1 };
+                            float c3[4] = { (c1[0] * (1.0f - u) + c2[0] * u) / 255.0f,
+                                            (c1[1] * (1.0f - u) + c2[1] * u) / 255.0f,
+                                            (c1[2] * (1.0f - u) + c2[2] * u) / 255.0f };
+                            glColor4fv(c3);
 				putblob(p.at(n).x,p.at(n).y,k1*pow(k2,p.at(n).h-3));
 				//cout<<vector2(p.at(n).x,p.at(n).y)<<endl;
 			}
